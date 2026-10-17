@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" 
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profil - Application ASVS</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+    <div class="container">
+        <div class="profile-card">
+            <h1>Mon Profil</h1>
+            
+            <!-- Messages de succès -->
+            <div th:if="${message}" class="alert alert-success">
+                <span th:text="${message}"></span>
+            </div>
+            
+            <div class="profile-info">
+                <div class="info-group">
+                    <label>Nom complet</label>
+                    <p th:text="${user.fullName}"></p>
+                </div>
+                
+                <div class="info-group">
+                    <label>Adresse email</label>
+                    <p th:text="${user.email}"></p>
+                </div>
+                
+                <div class="info-group">
+                    <label>Rôle</label>
+                    <p th:text="${user.role}"></p>
+                </div>
+                
+                <div class="info-group">
+                    <label>Compte créé le</label>
+                    <p th:text="${#temporals.format(user.createdAt, 'dd/MM/yyyy HH:mm')}"></p>
+                </div>
+            </div>
+            
+            <div class="profile-actions">
+                <a th:href="@{/change-password}" class="btn btn-secondary">
+                    Changer mon mot de passe
+                </a>
+                
+                <form th:action="@{/logout}" method="post" style="display: inline;">
+                    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+                    <button type="submit" class="btn btn-danger">Se déconnecter</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
